@@ -24,6 +24,7 @@ namespace BaseDatosFireBase
             AuthSecret = "1qc09IprkPefO5O1V9tySgNeYWljlwSfgppchvWZ",
             BasePath = "https://fir-bdcsharp-52a7a-default-rtdb.firebaseio.com/"
         };
+        IFirebaseClient client;
 
         private void label4_Click(object sender, EventArgs e)
         {
@@ -37,7 +38,26 @@ namespace BaseDatosFireBase
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            try
+            {
+                client = new FireSharp.FirebaseClient(fcon);
+            }catch
+            {
+                MessageBox.Show("Existe un problema en la conexión de la Internet");
+            }
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Estudiante std = new Estudiante
+            {
+                Nombre = textBox1.Text,
+                Cuenta = textBox2.Text,
+                Semestre = textBox3.Text,
+                Grupo = textBox4.Text
+            };
+            var setter = client.Set("ListaEstudiantes/" + textBox2.Text, std);
+            MessageBox.Show("Datos insertados correctamente");
         }
     }
 }
